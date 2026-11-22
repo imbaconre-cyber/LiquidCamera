@@ -97,6 +97,7 @@ fun CameraScreen() {
     var focusOffset by remember { mutableStateOf<Offset?>(null) }
     var focusVisible by remember { mutableStateOf(false) }
     var showZoomSlider by remember { mutableStateOf(false) }
+    var captureFlash by remember { mutableStateOf(false) }
 
     val safeTop = WindowInsets.safeDrawing.asPaddingValues().calculateTopPadding()
     val safeBottom = WindowInsets.safeDrawing.asPaddingValues().calculateBottomPadding()
@@ -114,6 +115,12 @@ fun CameraScreen() {
         if (focusVisible) {
             delay(1500)
             focusVisible = false
+        }
+    }
+    LaunchedEffect(captureFlash) {
+        if (captureFlash) {
+            delay(120)
+            captureFlash = false
         }
     }
 
@@ -295,6 +302,15 @@ fun CameraScreen() {
             }
         }
 
+        // Capture flash overlay
+        if (captureFlash) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.White.copy(alpha = 0.35f))
+            )
+        }
+
         // Shutter
         val interactionSource = remember { MutableInteractionSource() }
         val isPressed by interactionSource.collectIsPressedAsState()
@@ -310,6 +326,7 @@ fun CameraScreen() {
                     interactionSource = interactionSource,
                     indication = null
                 ) {
+                    captureFlash = true
                     controller.takePhoto { uri -> lastPhotoUri = uri }
                 },
             contentAlignment = Alignment.Center
