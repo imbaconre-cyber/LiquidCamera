@@ -43,7 +43,7 @@ class CameraController(
             try {
                 provider.unbindAll()
                 camera = provider.bindToLifecycle(lifecycleOwner, selector, preview, imageCapture)
-                preview.surfaceProvider = previewView.surfaceProvider
+                preview.setSurfaceProvider(previewView.getSurfaceProvider())
                 applyFlash()
                 applyZoom()
                 onBound()
