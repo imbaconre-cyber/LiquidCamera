@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.liquidcamera"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.liquidcamera"
